@@ -6,7 +6,7 @@ const initialState = {
   password: "",
 }
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   
@@ -20,8 +20,6 @@ function LoginScreen() {
     setState(initialState);
     console.log(state);
   };
-  
-
 
   return (
     <>
@@ -29,7 +27,7 @@ function LoginScreen() {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}>
-    <ImageBackground style={styles.image} source={require('./../image/img-bg.jpg')}>
+    <ImageBackground style={styles.image} source={require('./../../image/img-bg.jpg')}>
     <View style={styles.form}>
      <Text style={styles.titleText}>Войти</Text>
    <TextInput style={styles.input} placeholder="Адрес электронной почты" onFocus={()=> {setIsShowKeyboard(true)}} value={state.email}
@@ -39,7 +37,9 @@ function LoginScreen() {
    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={()=> {submitForm()}}>
         <Text style={styles.btnText}>Войти</Text>
       </TouchableOpacity>
-      <Text style={styles.acountText}>Нет аккаунта? Зарегистрироваться</Text>
+      <Text 
+        onPress={() => navigation.navigate('Register')} 
+        style={styles.acountText}>Нет аккаунта? Зарегистрироваться</Text>
    </View>
    </ImageBackground>
    </KeyboardAvoidingView>

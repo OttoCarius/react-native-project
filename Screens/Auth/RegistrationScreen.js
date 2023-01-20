@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { StyleSheet, TextInput, ImageBackground, Text, View, TouchableOpacity, Image, Keyboard,KeyboardAvoidingView, TouchableWithoutFeedback, Dimensions} from 'react-native';
-// import AddPhoto from "./../image/add.svg";
 
 const initialState = {
   login: "",
@@ -8,7 +7,7 @@ const initialState = {
   password: "",
 }
 
-function RegistrationScreen() {
+function RegistrationScreen({ navigation }) {
 const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 const [state, setState] = useState(initialState);
 
@@ -31,7 +30,7 @@ const submitForm = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}>
-    <ImageBackground style={styles.image} source={require('./../image/img-bg.jpg')}>
+    <ImageBackground style={styles.image} source={require('./../../image/img-bg.jpg')}>
     <View style={styles.form}>
       <View style={styles.photoBlock}>
       <TouchableOpacity
@@ -41,9 +40,9 @@ const submitForm = () => {
           onPress={() => console.log('add avatar')}>
         <Image
           style={styles.addPhoto}
-        source={require("./../image/add.png")}/>
+        source={require("./../../image/add.png")}/>
       </TouchableOpacity>
-        <Image style={styles.userPhoto}  source={require('./../image/ava.jpg')} />
+        <Image style={styles.userPhoto}  source={require('./../../image/ava.jpg')} />
       </View>
      <Text style={styles.titleText}>Регистрация</Text>
    <TextInput style={styles.input} placeholder="Логин" onFocus={()=> {setIsShowKeyboard(true)}} value={state.login}
@@ -55,7 +54,9 @@ const submitForm = () => {
    <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={()=> {submitForm()}}>
         <Text style={styles.btnText}>Зарегистрироваться</Text>
       </TouchableOpacity>
-      <Text style={styles.acountText}>Уже есть аккаунт? Войти</Text>
+      <Text 
+      onPress={() => navigation.navigate('Login')} 
+      style={styles.acountText}>Уже есть аккаунт? Войти</Text>
    </View>
    </ImageBackground>
    </KeyboardAvoidingView>
