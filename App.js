@@ -1,13 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import { StyleSheet, View, } from 'react-native';
-import RegistrationScreen from './Screens/RegistrationScreen'
-import LoginScreen from './Screens/LoginScreen'
+import { NavigationContainer } from '@react-navigation/native';
+// import { StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import {useRoute} from './router';
 
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const routing = useRoute(true);
 
   useEffect(() => {
     async function prepare() {
@@ -23,8 +24,7 @@ export default function App() {
         setAppIsReady(true);
       }
     }
-
-    prepare();
+     prepare();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -39,16 +39,17 @@ export default function App() {
 
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-            <RegistrationScreen/>
-        {/* <LoginScreen/> */}
-      </View>
+<NavigationContainer onLayout={onLayoutRootView}>
+  {routing}
+</NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//   },
+// });
+
+ 
