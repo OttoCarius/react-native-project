@@ -5,33 +5,16 @@ import {
   Image,
   Dimensions,
   FlatList,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 import { StyleSheet } from "react-native";
 
 
-const COURSES = [
-  {
-    id: "45k6-j54k-4jth",
-    title: "HTML",
-  },
-  {
-    id: "4116-jfk5-43rh",
-    title: "JavaScript",
-  },
-  {
-    id: "4d16-5tt5-4j55",
-    title: "React",
-  },
-  {
-    id: "LG16-ant5-0J25",
-    title: "React Native",
-  },
-];
-
 export const PostsScreen = ({ navigation, route }) => {
-const [courses, setCourses] = useState(COURSES);
+  const [posts, setPosts] = useState([]);
   
 
   const [windowWidth, setWindowWidth] = useState(
@@ -47,6 +30,12 @@ const [courses, setCourses] = useState(COURSES);
 
     return () => dimensionsHandler.remove();
   }, []);
+
+  useEffect(() => {
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
+  }, [route.params]);
 
 
 
@@ -70,16 +59,52 @@ const [courses, setCourses] = useState(COURSES);
       <SafeAreaView
       style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
     >
-      <FlatList
-        data={courses}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
-        keyExtractor={(item) => item.id}
-      ></FlatList>
+    <FlatList
+        data={posts}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={{ marginTop: 32 }}>
+            <Image
+              source={{ uri: item.post.photo }}
+              style={{ ...styles.photo, width: windowWidth - 16 * 2 }}
+            />
+            <Text style={styles.photoText}>{item.post.title}</Text>
+            <View style={styles.linksContainer}>
+              <TouchableOpacity
+                style={styles.link}
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate("CommentsScreen", {
+                    uri: item.post.photo,
+                  });
+                }}
+              >
+                <Feather name="message-circle" size={24} color="#BDBDBD" />
+                <Text style={{ ...styles.count, marginLeft: 6 }}>13</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.link}
+                activeOpacity={0.8}
+                onPress={() => {
+                  navigation.navigate("MapScreen", {
+                    location: item.post.location,
+                  });
+                }}
+              >
+                <Feather name="map-pin" size={24} color="#BDBDBD" />
+                <Text style={styles.locationText}>
+                  {item.post.location.place}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      />
     </SafeAreaView>
     </View>
   );
 };
-
 
 
  const styles = StyleSheet.create({
@@ -94,8 +119,6 @@ const [courses, setCourses] = useState(COURSES);
     flexDirection: "row",
     alignItems: "center",
   },
-
-
   photo: {
     height: 240,
     marginBottom: 8,
