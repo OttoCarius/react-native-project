@@ -1,9 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-// import { StyleSheet } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-import {useRoute} from './router';
+import {useRoute} from './src/router';
 
 
 export default function App() {
@@ -14,8 +13,8 @@ export default function App() {
     async function prepare() {
       try {
         await Font.loadAsync({
-          "Roboto-Regular": require("./Screens/assets/fonts/Roboto-Regular.ttf"),
-          "Roboto-Medium": require("./Screens/assets/fonts/Roboto-Medium.ttf"),
+          "Roboto-Regular": require("./src/Screens/assets/fonts/Roboto-Regular.ttf"),
+          "Roboto-Medium": require("./src/Screens/assets/fonts/Roboto-Medium.ttf"),
         });
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (e) {
@@ -45,11 +44,5 @@ export default function App() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//   },
-// });
 
  
